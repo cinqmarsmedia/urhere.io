@@ -1,0 +1,241 @@
+
+
+<!-- && -->
+
+<div class="landscape" *ngIf="landscape" style="position:absolute;top:0;left:0;width:100%;height:100%;background-color:white;z-index:9999;padding-left:2vw;padding-right:2vw">
+	
+<img class="main landscap" style="width:60vh !important;position:absolute;left:5vw;top:-1vw;max-width:35vw" src="assets/urhere.png">
+
+<div style="position:absolute;top:14%;width:33%">
+<div style="text-align:center;" class="txt">
+	<img style="width:8vw" src="assets/733524.svg">
+	<div style="font-size:2.5vw;padding-left:3vh;padding-right:3vh" >
+App only works in portrait, rotate device to use.
+</div>
+  </div>
+</div>
+
+<div (click)="github()" style="position:absolute;top:14%;width:33%;right:0">
+<div style="text-align:center;cursor: pointer" class="txt">
+	<img style="width:8vw" src="assets/733553.svg">
+	<div style="font-size:2.5vw;padding-left:3vh;padding-right:3vh" >
+Non-Profit and Open-Source on GitHub
+</div>
+  </div>
+</div>
+<div class="row">
+  <div class="column">
+
+<div style="text-align:center" class="txt">
+	<img style="width:8vw" src="assets/138584.svg">
+	<div style="font-size:2.5vw;padding-left:3vh;padding-right:3vh" >
+Snap or upload a picture of any map or trail
+</div>
+  </div>
+</div>
+
+
+  <div class="column">
+  <div style="text-align:center" class="txt">
+	<img style="width:8vw" src="assets/856336.svg">
+	<div style="font-size:2.5vw;padding-left:3vh;padding-right:3vh" >
+Sync two points with satellite imagery
+</div></div>
+  </div>
+  <div class="column">
+<div style="text-align:center"><!---->
+<img style="width:8vw" src="assets/1809437.svg">
+	<div style="font-size:2.5vw;padding-left:3vh;padding-right:3vh">
+
+We use trigonometry to approximate your GPS location on your image
+</div>
+
+</div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div (click)="cmm()" class="txt" style="text-align:center;position:absolute;bottom:2.5vh;left:0;right:0"><img src="assets/cmm2.png" style="width:8vh">&nbsp;©Cinq-Mars Media 2020</div>
+	<div class="bck"></div>
+</div>
+
+
+
+<div *ngIf="(preview && !googleMap && !hide && errorWait) || error" style="position:absolute;top:0;left:0;width:100%;height:100%;background-color:white;z-index:9999">
+	
+<img class="main" src="assets/urhere.png">
+<!--<div style="text-align:center" ></div>-->
+<div style="width:100%;padding-left:2vh;padding-right:2vh;padding-top:30vh" >
+
+<div style="text-align:center">
+	<img style="width:9vh" src="assets/1541402.svg">
+	<div style="font-size:2.8vh" >
+There was a fatal error. Ensure geolocation <b>permissions</b> are granted and that you are <b>online</b> on initialization to sync with Google Maps
+</div>
+</div>
+
+<div (click)="github()" style="text-align:center;padding-top:3vh">
+	<img style="width:9vh" src="assets/733553.svg">
+	<div style="font-size:2.8vh" >
+For help or to raise an issue, check out the repo on <b>GitHub</b>.
+</div>
+</div>
+
+<div style="text-align:center;padding-top:4vh">
+	<div style="font-size:2.8vh" >
+Error Code: {{preview?'1':'0'}}{{googleMap?'1':'0'}}{{hide?'1':'0'}}{{error?'1':'0'}}{{internet?'1':'0'}}{{trueError.code}}<br>
+{{trueError.message}}
+</div>
+</div>
+
+
+
+<button ion-button large class="custom-file-upload" (click)="refresh()" style="width:100%" >Try Again<b></b>
+</button>
+<div (click)="cmm()" class="txt" style="text-align:center;position:absolute;bottom:2.5vh;left:0;right:0"><img src="assets/cmm2.png" style="width:4vh">&nbsp;©Cinq-Mars Media 2020</div>
+	<div class="bck"></div>
+</div></div>
+
+
+
+
+<button *ngIf="preview && !hide && points.length<2" (click)="newCalibrate()" large style="position:absolute;left:0;right:0;margin-left:auto;margin-right:auto;bottom:15vh;margin:auto;z-index:98;background-color:#FF5461" ion-button>{{MapOn?"Sync Point":confirm?"Confirm Point":"Choose Point"}}&nbsp;<b>{{points.length+1}}</b></button>
+
+
+<button *ngIf="adjustIT" (click)="makeAdjust()" large style="position:absolute;left:0;right:0;margin-left:auto;margin-right:auto;bottom:15vh;margin:auto;z-index:98;background-color:#FF5461" ion-button><b>I'm Actually Here</b></button>
+
+
+<button *ngIf="points.length==2 && preview" (click)="reset()" large style="position:absolute;left:0;margin-left:auto;margin-right:auto;top:4vh;z-index:98;background-color:#FF5461" ion-button>Reset</button>
+<!---->
+<button *ngIf="points.length==2 && preview && !adjustIT && adjustment[0]==0 && adjustment[1]==0 && !adjustParam" (click)="adjust()" large style="position:absolute;right:0;margin-left:auto;margin-right:auto;top:4vh;z-index:98;background-color:#FF5461" ion-button>Adjust</button>
+
+<button *ngIf="points.length==2 && preview && adjustIT && adjustment[0]==0 && adjustment[1]==0 && !adjustParam" (click)="adjust()" large style="position:absolute;right:0;margin-left:auto;margin-right:auto;top:4vh;z-index:98;background-color:#FF5461" ion-button>Cancel</button>
+
+<img src="assets/spin.svg" *ngIf="loader" style="position:absolute;top:0;right:0;left:0;bottom:0;margin:auto;width:80vw">
+ <!-- opacity slider?-->
+ 
+<div class="bck"></div>
+<div style="background:white;width:100%;height:100%;position:absolute;top:0;left:0;z-index:-15"></div>
+<div *ngIf="preview && !hide && points.length<2" >
+<img style="position:absolute;left:0;right:5.5vw;margin:auto;top:0;bottom:0;width:45vw;z-index:99 !important;user-drag: none; 
+user-select: none;
+-moz-user-select: none;
+-webkit-user-drag: none;
+-webkit-user-select: none;
+-ms-user-select: none;pointer-events:none" src="assets/empty.svg">
+<div style="position:absolute;left:0;top:0;right:0;z-index:80;margin:auto;padding:2vw;text-align:center;padding-top:2vh;padding-bottom:3vh;background-color:#FF9CA4;font-size:3vh">Select the <b>{{points.length>0?'second':'first'}}</b> of two points to coordinate with google maps
+<div *ngIf="points.length==1" style="font-size:2vh;left:0;right:0;margin:auto;position:absolute;margin-top:.5vh">* The further the points, the more accurate</div>
+</div>
+
+</div>
+
+<img *ngIf="adjustIT" style="position:absolute;left:0;right:5.5vw;margin:auto;top:0;bottom:0;width:45vw;z-index:99 !important;user-drag: none; 
+user-select: none;
+-moz-user-select: none;
+-webkit-user-drag: none;
+-webkit-user-select: none;
+-ms-user-select: none;pointer-events:none" src="assets/youarehere.svg">
+
+<div *ngIf="!hide && !adjustIT" style="position:absolute;left:0;bottom:5vh;right:0;z-index:80;margin:auto;padding:5vw;text-align:center;font-size:2.5vh;color:white;text-shadow:2px 2px 5px #000;z-index:99"><b>swipe to pan & pinch to zoom</b></div>
+
+
+
+<div *ngIf="adjustIT" style="position:absolute;left:0;bottom:5vh;right:0;z-index:80;margin:auto;padding:5vw;text-align:center;font-size:2.5vh;color:white;text-shadow:2px 2px 5px #000;z-index:99"><b>move icon to current location</b></div>
+
+
+<div #map id="map" [ngStyle]="{'opacity':MapOn?1:0,'pointer-events':MapOn?'auto':'none'}" style="z-index: 95;"></div><!-- -->
+<div *ngIf="spinner" style="position:absolute;width:100%;height:100%;z-index:99 !important;background:rgba(0,0,0,.7)">
+<ion-spinner class="spin"  name="crescent"></ion-spinner>
+</div>
+
+
+
+
+
+
+
+<div id="expands" [ngClass]="{'disable':MapOn}" style="position:absolute;left:0;right:0;margin:auto;top:0;bottom:0;width:100%;" [hidden]="hide" *ngIf="preview" >
+<!--
+<img class="marker" *ngIf="currentlocation.length>0" [ngStyle]="{'left':currentlocation[0]+'vw','top':currentlocation[1]+'vw','width':markerWidth+'vw'}" src="/assets/marker.svg">
+-->
+
+<!---->
+
+
+
+<img #marker class="secondMarker" [ngStyle]="{'left':markerLeft+14+adjustment[0]+'px','top':markerTop+10+adjustment[1]+'px','width':'15%', 'opacity':((currentlocation.length>0)?(!adjustIT?(1):(.5)):(0))}" src="assets/overlay.svg">
+
+
+<img #mapImage [src]="preview" style="position:absolute;left:0;right:0;margin:auto;top:0;bottom:0;width:100%;z-index:0 !important">
+</div>
+<!---->
+<div *ngIf="hide" style="z-index:99 !important;position:absolute; top:0; left:0">
+	
+<img class="main" src="assets/urhere.png">
+<!--<div style="text-align:center" ></div>-->
+<div style="width:100%;padding-left:3vh;padding-right:3vh;padding-top:30vh" >
+
+<div style="text-align:center" class="txt">
+	<img style="width:8vh" src="assets/138584.svg">
+	<div style="font-size:2.5vh" >
+Snap or upload a picture of any map or trail
+</div>
+
+
+<div style="text-align:center;padding-top:1vh" class="txt">
+	<img style="width:8vh" src="assets/856336.svg">
+	<div style="font-size:2.5vh" >
+Sync two points with satellite imagery
+</div>
+<div style="text-align:center;padding-top:1vh"><!---->
+<img style="width:8vh" src="assets/1809437.svg">
+	<div style="font-size:2.5vh">
+
+We use trigonometry to approximate your GPS location on your image
+</div>
+
+</div>
+	<!--
+<div style="padding-top:3vh">
+<img style="width:20vw" src="assets/856336.svg">
+
+<div style="float:right;width:55vw;font-size:2vh;padding-top:-5vh" ><b>
+Snap or upload a picture of any map or trail. Sync two points with corresponding satellite imagery.</b>
+</div>
+</div>
+
+<div style="padding-top:5vh;">
+<img style="width:20vw" src="assets/1809437.svg">
+<div style="float:right;width:55vw;padding-top:-1vh;font-size:2vh" ><b>
+We use sophisticated trigonometry to approximate your GPS location atop the image you uploaded!</b>
+</div>
+
+</div>
+</div>
+
+-->
+</div>
+</div>
+
+
+</div>
+
+
+</div>
+<div *ngIf="hide" style="position:absolute;bottom:0vh;width:100%">
+<label ion-button large class="custom-file-upload" >Get Started<b></b>
+<input type="file" accept="image/*" (click)="start()" (change)="showPreview($event)">
+</label>
+<div (click)="cmm()" class="txt" style="text-align:center;position:absolute;bottom:2.5vh;left:0;right:0"><img src="assets/cmm2.png" style="width:4vh">&nbsp;©Cinq-Mars Media 2020</div>
+
+</div>
+<!---->
+
+
